@@ -1,0 +1,308 @@
+[gd_scene format=3 uid="uid://y6xtcobtiwxm"]
+
+[ext_resource type="Script" uid="uid://c5473wxvpfres" path="res://Node2d.cs" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://gl2x65w04qmi" path="res://DinoPlayer.cs" id="2_0e48y"]
+[ext_resource type="Script" uid="uid://c245ovvpshoi2" path="res://Spawner.cs" id="2_4d7sh"]
+[ext_resource type="PackedScene" uid="uid://djbjjukphs7yx" path="res://obstacle.tscn" id="3_rj586"]
+[ext_resource type="Texture2D" uid="uid://cjubngk7njfuw" path="res://ChatGPT Image 21_22_18 4 thg 9, 2026.png" id="4_0hol4"]
+[ext_resource type="Texture2D" uid="uid://5x6pipy25ibp" path="res://start_button.png" id="9_4d7sh"]
+[ext_resource type="Texture2D" uid="uid://dja3pqfwh7il0" path="res://Clothes/aocongchua-removebg-preview.png" id="9_ir8iy"]
+[ext_resource type="Texture2D" uid="uid://wjgq3b84kyfi" path="res://Clothes/mucongchua-removebg-preview.png" id="10_hqns4"]
+[ext_resource type="Texture2D" uid="uid://d75mm7agynx2" path="res://Clothes/aobodo2.png" id="12_x0ka3"]
+[ext_resource type="Texture2D" uid="uid://cyfhdpavnvimw" path="res://Clothes/aobodo3.png" id="13_0h7mo"]
+[ext_resource type="Texture2D" uid="uid://bbvxd7b103bmc" path="res://dino_dead.png" id="14_dead"]
+[ext_resource type="Texture2D" uid="uid://bmik7xgigait0" path="res://dino_duck.png" id="15_duck"]
+[ext_resource type="Texture2D" uid="uid://3yqb2x4a373a" path="res://game_over_frame.png" id="16_frame"]
+[ext_resource type="Script" uid="uid://bv68mrxe3o460" path="res://GroundManager.cs" id="17_ground"]
+[ext_resource type="Script" uid="uid://dt143ql8o1awd" path="res://SkyManager.cs" id="18_sky"]
+[ext_resource type="Texture2D" uid="uid://chwyijycxev0w" path="res://btn_clothes_normal.png" id="19_clothes_norm"]
+[ext_resource type="Texture2D" uid="uid://bud0vsf4vd5ys" path="res://btn_clothes_hover.png" id="20_clothes_hover"]
+[ext_resource type="Texture2D" uid="uid://dxkgt6r5hhsq4" path="res://start_button_hover.png" id="21_start_hover"]
+[ext_resource type="Texture2D" uid="uid://ceuynji04cqmd" path="res://start_button_pressed.png" id="22_start_pressed"]
+[ext_resource type="Texture2D" uid="uid://wobwoxcvjarn" path="res://score_frame.png" id="23_score_frame"]
+[ext_resource type="PackedScene" uid="uid://c6planeobs001" path="res://plane_obstacle.tscn" id="24_plane"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6r6c"]
+atlas = ExtResource("4_0hol4")
+region = Rect2(887, 0, 887, 887)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdubu"]
+atlas = ExtResource("4_0hol4")
+region = Rect2(0, 0, 887, 887)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o05a5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6r6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdubu")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mylaf"]
+size = Vector2(64, 175)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_duck"]
+size = Vector2(130, 75)
+
+[node name="Node2D" type="Node2D" unique_id=651389398 node_paths=PackedStringArray("startButton", "spawner", "skyManager", "groundManager", "scoreLabel", "scoreFrame")]
+script = ExtResource("1_wtcfe")
+startButton = NodePath("HUD/StartButton")
+spawner = NodePath("Spawner")
+skyManager = NodePath("SkyManager")
+groundManager = NodePath("GroundManager")
+scoreLabel = NodePath("HUD/ScoreFrame/ScoreLabel")
+scoreFrame = NodePath("HUD/ScoreFrame")
+
+[node name="Spawner" type="Node" parent="." unique_id=877861671]
+script = ExtResource("2_4d7sh")
+obstacleScene = ExtResource("3_rj586")
+planeScene = ExtResource("24_plane")
+
+[node name="SkyManager" type="Node2D" parent="." unique_id=3378352]
+script = ExtResource("18_sky")
+
+[node name="GroundManager" type="Node2D" parent="." unique_id=1077192195]
+script = ExtResource("17_ground")
+
+[node name="DinoPlayer" type="CharacterBody2D" parent="." unique_id=1852117108]
+z_index = 5
+script = ExtResource("2_0e48y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="DinoPlayer" unique_id=1754628052]
+position = Vector2(232.79147, 316.279)
+scale = Vector2(0.30035746, 0.3072807)
+sprite_frames = SubResource("SpriteFrames_o05a5")
+animation = &"run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DinoPlayer" unique_id=321442954]
+visible = false
+position = Vector2(245, 307)
+shape = SubResource("RectangleShape2D_mylaf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DinoPlayer" unique_id=321442955]
+visible = false
+position = Vector2(245, 357)
+shape = SubResource("RectangleShape2D_duck")
+disabled = true
+
+[node name="ClothesSprite" type="Sprite2D" parent="DinoPlayer" unique_id=1132830870]
+visible = false
+position = Vector2(212.78178, 340)
+scale = Vector2(0.31610173, 0.27766907)
+texture = ExtResource("9_ir8iy")
+
+[node name="HatSprite" type="Sprite2D" parent="DinoPlayer" unique_id=828048956]
+visible = false
+position = Vector2(277, 201)
+scale = Vector2(0.21207055, 0.22830097)
+texture = ExtResource("10_hqns4")
+
+[node name="DeadSprite" type="Sprite2D" parent="DinoPlayer" unique_id=748291034]
+visible = false
+position = Vector2(245, 365)
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("14_dead")
+
+[node name="DuckSprite" type="Sprite2D" parent="DinoPlayer" unique_id=2081928374]
+visible = false
+position = Vector2(225, 354)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("15_duck")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1107548173]
+
+[node name="StartButton" type="TextureButton" parent="HUD" unique_id=2014862601]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -68.0
+offset_right = 210.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(210, 68)
+texture_normal = ExtResource("9_4d7sh")
+texture_pressed = ExtResource("22_start_pressed")
+texture_hover = ExtResource("21_start_hover")
+
+[node name="GameOverFrame" type="TextureButton" parent="HUD" unique_id=987654322]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -263.0
+offset_top = -196.5
+offset_right = 263.0
+offset_bottom = 196.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(263, 196.5)
+texture_normal = ExtResource("16_frame")
+
+[node name="TitleLabel" type="Label" parent="HUD/GameOverFrame" unique_id=1091871139]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = 95.0
+offset_right = 160.0
+offset_bottom = 145.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.55, 0.1, 0.14, 1)
+theme_override_font_sizes/font_size = 32
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="ScoreValLabel" type="Label" parent="HUD/GameOverFrame" unique_id=626148682]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = 155.0
+offset_right = 160.0
+offset_bottom = 195.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.24, 0.14, 0.08, 1)
+theme_override_font_sizes/font_size = 28
+text = "SCORE: 00000"
+horizontal_alignment = 1
+
+[node name="HiValLabel" type="Label" parent="HUD/GameOverFrame" unique_id=1355335629]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = 200.0
+offset_right = 160.0
+offset_bottom = 240.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.24, 0.14, 0.08, 1)
+theme_override_font_sizes/font_size = 28
+text = "HI: 00000"
+horizontal_alignment = 1
+
+[node name="HintLabel" type="Label" parent="HUD/GameOverFrame" unique_id=522382846]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 255.0
+offset_right = 180.0
+offset_bottom = 288.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.51, 0.35, 0.2, 1)
+theme_override_font_sizes/font_size = 18
+text = "NHẤN 2 LẦN ĐỂ CHƠI LẠI"
+horizontal_alignment = 1
+
+[node name="ChangeClothesButton" type="TextureButton" parent="HUD" unique_id=2082713813]
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 104.0
+offset_bottom = 102.0
+texture_normal = ExtResource("19_clothes_norm")
+texture_pressed = ExtResource("20_clothes_hover")
+texture_hover = ExtResource("20_clothes_hover")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ScoreFrame" type="TextureRect" parent="HUD" unique_id=987654320]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -260.0
+offset_top = 18.0
+offset_right = -20.0
+offset_bottom = 117.0
+grow_horizontal = 0
+texture = ExtResource("23_score_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScoreLabel" type="Label" parent="HUD/ScoreFrame" unique_id=987654321]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 14.0
+offset_right = -20.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.31, 0.15, 0.04, 1)
+theme_override_font_sizes/font_size = 22
+text = "SCORE: 00000
+HI: 00000"
+vertical_alignment = 1
+
+[node name="ClothesPanel" type="Panel" parent="HUD" unique_id=455781174]
+visible = false
+offset_left = 395.0
+offset_top = 37.0
+offset_right = 984.0
+offset_bottom = 591.0
+offset_transform_position = Vector2(300, 100)
+
+[node name="CloseClothesButton" type="Button" parent="HUD/ClothesPanel" unique_id=1904754896]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 24.0
+text = "x"
+
+[node name="OutfitButton1" type="TextureButton" parent="HUD/ClothesPanel" unique_id=625376935]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 33.0
+offset_top = 81.0
+offset_right = 69.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+offset_transform_enabled = true
+offset_transform_scale = Vector2(1.5, 1.5)
+texture_normal = ExtResource("9_ir8iy")
+
+[node name="OutfitButton2" type="TextureButton" parent="HUD/ClothesPanel" unique_id=935995433]
+layout_mode = 0
+offset_left = 236.0
+offset_top = 93.0
+offset_right = 702.0
+offset_bottom = 369.0
+scale = Vector2(0.25, 0.25)
+offset_transform_enabled = true
+offset_transform_position = Vector2(60, 0)
+offset_transform_scale = Vector2(2.2, 2.2)
+texture_normal = ExtResource("12_x0ka3")
+
+[node name="OutfitButton3" type="TextureButton" parent="HUD/ClothesPanel" unique_id=1737483337]
+layout_mode = 0
+offset_left = 415.0
+offset_top = 110.0
+offset_right = 881.0
+offset_bottom = 386.0
+scale = Vector2(0.32, 0.32)
+offset_transform_enabled = true
+offset_transform_position = Vector2(60, 0)
+offset_transform_scale = Vector2(1.8, 1.8)
+texture_normal = ExtResource("13_0h7mo")

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b80diy4lokbpy"]
+
+[ext_resource type="Script" path="res://GroundPiece.cs" id="1_piece"]
+[ext_resource type="Texture2D" uid="uid://81ou8am5lh7h" path="res://ChatGPT Image 22_15_23 4 thg 9, 2026.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g1"]
+size = Vector2(2163.095, 232)
+
+[node name="Ground1" type="StaticBody2D"]
+script = ExtResource("1_piece")
+Width = 2163.095
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1081.547, 508.18915)
+scale = Vector2(1.3588829, 1.4631938)
+texture = ExtResource("2_tex")
+region_enabled = true
+region_rect = Rect2(88.88544, 347.84613, 1591.8179, 275.9973)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1081.547, 529)
+shape = SubResource("RectangleShape2D_g1")

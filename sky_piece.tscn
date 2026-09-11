@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bj0ki43udu4yk"]
+
+[ext_resource type="Texture2D" uid="uid://c8am6yx007jjp" path="res://ChatGPT Image 04_31_47 6 thg 9, 2026.png" id="1_tex"]
+[ext_resource type="Script" uid="uid://dxbifljl125bv" path="res://SkyPiece.cs" id="2_script"]
+
+[node name="SkyPiece" type="Node2D" unique_id=1045548284]
+script = ExtResource("2_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1545634483]
+position = Vector2(827.99994, 282)
+scale = Vector2(1.4569603, 1.0838044)
+texture = ExtResource("1_tex")
+region_enabled = true
+region_rect = Rect2(290.178, 355.732, 1131.285, 531.268)

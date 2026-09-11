@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c6planeobs001"]
+
+[ext_resource type="Script" uid="uid://bm54ffw103o4l" path="res://Obstacle.cs" id="1_obs"]
+[ext_resource type="Texture2D" uid="uid://ndvhuy77n41q" path="res://airplane.png" id="2_plane"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plane"]
+size = Vector2(182.5, 48)
+
+[node name="PlaneObstacle" type="Area2D" unique_id=1982736450 groups=["obstacle"]]
+z_index = 5
+script = ExtResource("1_obs")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1982736451]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_plane")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1982736452]
+position = Vector2(-24.25, 2)
+shape = SubResource("RectangleShape2D_plane")

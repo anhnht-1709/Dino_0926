@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://djbjjukphs7yx"]
+
+[ext_resource type="Script" uid="uid://bm54ffw103o4l" path="res://Obstacle.cs" id="1_aubd6"]
+[ext_resource type="Texture2D" uid="uid://c33f56jlne8x8" path="res://ChatGPT Image 11_37_41 5 thg 9, 2026.png" id="2_vcivv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f775p"]
+size = Vector2(107, 80.5)
+
+[node name="Obstacle" type="Area2D" unique_id=1651004853 groups=["obstacle"]]
+z_index = 5
+script = ExtResource("1_aubd6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=910607248]
+position = Vector2(-9.250025, 8.906244)
+scale = Vector2(0.16432232, 0.15223265)
+texture = ExtResource("2_vcivv")
+region_enabled = true
+region_rect = Rect2(277.79578, 135.8494, 782.6832, 879.8717)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=854232615]
+position = Vector2(-10.5, 29.75)
+shape = SubResource("RectangleShape2D_f775p")
