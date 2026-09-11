@@ -5,6 +5,8 @@ public partial class Node2d : Godot.Node2D
     [Export] private TextureButton startButton;
     [Export] private TextureButton bigClothesButton;
     [Export] private BaseButton gameOverFrame;
+    [Export] private BaseButton homeButton;
+    [Export] private BaseButton replayButton;
     private Label gameOverScoreLabel;
     private Label gameOverHiLabel;
     private Label gameOverHintLabel;
@@ -54,9 +56,28 @@ public partial class Node2d : Godot.Node2D
             bigClothesButton.Pressed += OpenClothesPanel;
         }
 
+        if (homeButton == null)
+        {
+            homeButton = GetNodeOrNull<BaseButton>("HUD/GameOverFrame/HomeButton");
+        }
+        if (homeButton != null)
+        {
+            homeButton.Pressed += OnHomeButtonPressed;
+        }
+
+        if (replayButton == null)
+        {
+            replayButton = GetNodeOrNull<BaseButton>("HUD/GameOverFrame/ReplayButton");
+        }
+        if (replayButton != null)
+        {
+            replayButton.Pressed += OnReplayButtonPressed;
+        }
+
         if (changeClothesButton == null)
         {
-            changeClothesButton = GetNodeOrNull<BaseButton>("HUD/ChangeClothesButton");
+            changeClothesButton = GetNodeOrNull<BaseButton>("HUD/GameOverFrame/ChangeClothesButton") 
+                               ?? GetNodeOrNull<BaseButton>("HUD/ChangeClothesButton");
         }
 		if (changeClothesButton != null)
 		{
@@ -288,7 +309,15 @@ public void StartGame()
         groundAnimation.Pause();
 
     if (dinoPlayer != null)
+    {
         dinoPlayer.StopGame();
+        dinoPlayer.SetStandingPose();
+    }
+
+    foreach (Node obstacle in GetTree().GetNodesInGroup("obstacle"))
+    {
+        obstacle.QueueFree();
+    }
 }
 
    public void StopGame()
@@ -319,7 +348,7 @@ public void StartGame()
         gameOverHiLabel.Text = $"HI: {highScore:D5}";
 
     if (gameOverHintLabel != null)
-        gameOverHintLabel.Text = "NHẤN 2 LẦN ĐỂ CHƠI LẠI";
+        gameOverHintLabel.Text = "NHẤN SPACE 2 LẦN ĐỂ CHƠI LẠI";
 
     if (gameOverFrame != null)
     {
@@ -411,6 +440,16 @@ private void ToggleThirdOutfit()
 {
     if (dinoPlayer != null)
         dinoPlayer.ToggleThirdOutfit();
+}
+
+private void OnHomeButtonPressed()
+{
+    ResetGame();
+}
+
+private void OnReplayButtonPressed()
+{
+    StartGame();
 }
 
 private void CenterStartButton()

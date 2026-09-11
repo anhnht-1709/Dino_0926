@@ -24,6 +24,13 @@
 [ext_resource type="Texture2D" uid="uid://bhvw1ek4o1e4c" path="res://btn_clothes_big_normal.png" id="25_cbig_norm"]
 [ext_resource type="Texture2D" uid="uid://d3a8uhk6j5f35" path="res://btn_clothes_big_hover.png" id="26_cbig_hover"]
 [ext_resource type="Texture2D" uid="uid://c08yj6umtinn8" path="res://btn_clothes_big_pressed.png" id="27_cbig_press"]
+[ext_resource type="Texture2D" uid="uid://biigek6vk4x14" path="res://btn_home_normal.png" id="28_home_norm"]
+[ext_resource type="Texture2D" uid="uid://ba43ndtc2euj8" path="res://btn_home_hover.png" id="29_home_hover"]
+[ext_resource type="Texture2D" uid="uid://bdcoconm47uvt" path="res://btn_home_pressed.png" id="30_home_press"]
+[ext_resource type="Texture2D" uid="uid://dlb6baigq1y2v" path="res://btn_replay_normal.png" id="31_rep_norm"]
+[ext_resource type="Texture2D" uid="uid://bmvleunnkeps1" path="res://btn_replay_hover.png" id="32_rep_hover"]
+[ext_resource type="Texture2D" uid="uid://xcl2pbtyragg" path="res://btn_replay_pressed.png" id="33_rep_press"]
+[ext_resource type="Texture2D" uid="uid://bdg1xgrgs5c3y" path="res://btn_clothes_pressed.png" id="34_clothes_press"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q6r6c"]
 atlas = ExtResource("4_0hol4")
@@ -53,15 +60,18 @@ size = Vector2(64, 175)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_duck"]
 size = Vector2(130, 75)
 
-[node name="Node2D" type="Node2D" unique_id=651389398 node_paths=PackedStringArray("startButton", "bigClothesButton", "spawner", "skyManager", "groundManager", "scoreLabel", "scoreFrame")]
+[node name="Node2D" type="Node2D" unique_id=651389398 node_paths=PackedStringArray("startButton", "bigClothesButton", "homeButton", "replayButton", "spawner", "skyManager", "groundManager", "scoreLabel", "scoreFrame", "changeClothesButton")]
 script = ExtResource("1_wtcfe")
 startButton = NodePath("HUD/StartButton")
 bigClothesButton = NodePath("HUD/BigClothesButton")
+homeButton = NodePath("HUD/GameOverFrame/HomeButton")
+replayButton = NodePath("HUD/GameOverFrame/ReplayButton")
 spawner = NodePath("Spawner")
 skyManager = NodePath("SkyManager")
 groundManager = NodePath("GroundManager")
 scoreLabel = NodePath("HUD/ScoreFrame/ScoreLabel")
 scoreFrame = NodePath("HUD/ScoreFrame")
+changeClothesButton = NodePath("HUD/GameOverFrame/ChangeClothesButton")
 
 [node name="Spawner" type="Node" parent="." unique_id=877861671]
 script = ExtResource("2_4d7sh")
@@ -179,9 +189,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -160.0
-offset_top = 95.0
+offset_top = 60.0
 offset_right = 160.0
-offset_bottom = 145.0
+offset_bottom = 105.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.55, 0.1, 0.14, 1)
 theme_override_font_sizes/font_size = 32
@@ -194,9 +204,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -160.0
-offset_top = 155.0
+offset_top = 110.0
 offset_right = 160.0
-offset_bottom = 195.0
+offset_bottom = 150.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.24, 0.14, 0.08, 1)
 theme_override_font_sizes/font_size = 28
@@ -209,14 +219,65 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -160.0
-offset_top = 200.0
+offset_top = 150.0
 offset_right = 160.0
-offset_bottom = 240.0
+offset_bottom = 190.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.24, 0.14, 0.08, 1)
 theme_override_font_sizes/font_size = 28
 text = "HI: 00000"
 horizontal_alignment = 1
+
+[node name="HomeButton" type="TextureButton" parent="HUD/GameOverFrame" unique_id=987654330]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -122.0
+offset_top = 230.0
+offset_right = -54.0
+offset_bottom = 298.0
+grow_horizontal = 2
+pivot_offset = Vector2(34, 34)
+texture_normal = ExtResource("28_home_norm")
+texture_pressed = ExtResource("30_home_press")
+texture_hover = ExtResource("29_home_hover")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ReplayButton" type="TextureButton" parent="HUD/GameOverFrame" unique_id=987654331]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -34.0
+offset_top = 230.0
+offset_right = 34.0
+offset_bottom = 298.0
+grow_horizontal = 2
+pivot_offset = Vector2(34, 34)
+texture_normal = ExtResource("31_rep_norm")
+texture_pressed = ExtResource("33_rep_press")
+texture_hover = ExtResource("32_rep_hover")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ChangeClothesButton" type="TextureButton" parent="HUD/GameOverFrame" unique_id=2082713813]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 54.0
+offset_top = 230.0
+offset_right = 122.0
+offset_bottom = 298.0
+grow_horizontal = 2
+pivot_offset = Vector2(34, 34)
+texture_normal = ExtResource("19_clothes_norm")
+texture_pressed = ExtResource("34_clothes_press")
+texture_hover = ExtResource("20_clothes_hover")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="HintLabel" type="Label" parent="HUD/GameOverFrame" unique_id=522382846]
 layout_mode = 1
@@ -224,26 +285,14 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -180.0
-offset_top = 255.0
+offset_top = 195.0
 offset_right = 180.0
-offset_bottom = 288.0
+offset_bottom = 223.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.51, 0.35, 0.2, 1)
-theme_override_font_sizes/font_size = 18
-text = "NHẤN 2 LẦN ĐỂ CHƠI LẠI"
+theme_override_font_sizes/font_size = 14
+text = "NHẤN SPACE 2 LẦN ĐỂ CHƠI LẠI"
 horizontal_alignment = 1
-
-[node name="ChangeClothesButton" type="TextureButton" parent="HUD" unique_id=2082713813]
-visible = false
-offset_left = 20.0
-offset_top = 18.0
-offset_right = 104.0
-offset_bottom = 102.0
-texture_normal = ExtResource("19_clothes_norm")
-texture_pressed = ExtResource("20_clothes_hover")
-texture_hover = ExtResource("20_clothes_hover")
-ignore_texture_size = true
-stretch_mode = 5
 
 [node name="ScoreFrame" type="TextureRect" parent="HUD" unique_id=987654320]
 visible = false
