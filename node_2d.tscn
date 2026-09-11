@@ -21,6 +21,9 @@
 [ext_resource type="Texture2D" uid="uid://ceuynji04cqmd" path="res://start_button_pressed.png" id="22_start_pressed"]
 [ext_resource type="Texture2D" uid="uid://wobwoxcvjarn" path="res://score_frame.png" id="23_score_frame"]
 [ext_resource type="PackedScene" uid="uid://c6planeobs001" path="res://plane_obstacle.tscn" id="24_plane"]
+[ext_resource type="Texture2D" uid="uid://bhvw1ek4o1e4c" path="res://btn_clothes_big_normal.png" id="25_cbig_norm"]
+[ext_resource type="Texture2D" uid="uid://d3a8uhk6j5f35" path="res://btn_clothes_big_hover.png" id="26_cbig_hover"]
+[ext_resource type="Texture2D" uid="uid://c08yj6umtinn8" path="res://btn_clothes_big_pressed.png" id="27_cbig_press"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q6r6c"]
 atlas = ExtResource("4_0hol4")
@@ -50,9 +53,10 @@ size = Vector2(64, 175)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_duck"]
 size = Vector2(130, 75)
 
-[node name="Node2D" type="Node2D" unique_id=651389398 node_paths=PackedStringArray("startButton", "spawner", "skyManager", "groundManager", "scoreLabel", "scoreFrame")]
+[node name="Node2D" type="Node2D" unique_id=651389398 node_paths=PackedStringArray("startButton", "bigClothesButton", "spawner", "skyManager", "groundManager", "scoreLabel", "scoreFrame")]
 script = ExtResource("1_wtcfe")
 startButton = NodePath("HUD/StartButton")
+bigClothesButton = NodePath("HUD/BigClothesButton")
 spawner = NodePath("Spawner")
 skyManager = NodePath("SkyManager")
 groundManager = NodePath("GroundManager")
@@ -135,6 +139,24 @@ texture_normal = ExtResource("9_4d7sh")
 texture_pressed = ExtResource("22_start_pressed")
 texture_hover = ExtResource("21_start_hover")
 
+[node name="BigClothesButton" type="TextureButton" parent="HUD" unique_id=2082713814]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = 82.0
+offset_right = 210.0
+offset_bottom = 218.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(210, 68)
+texture_normal = ExtResource("25_cbig_norm")
+texture_pressed = ExtResource("27_cbig_press")
+texture_hover = ExtResource("26_cbig_hover")
+
 [node name="GameOverFrame" type="TextureButton" parent="HUD" unique_id=987654322]
 visible = false
 anchors_preset = 8
@@ -212,6 +234,7 @@ text = "NHẤN 2 LẦN ĐỂ CHƠI LẠI"
 horizontal_alignment = 1
 
 [node name="ChangeClothesButton" type="TextureButton" parent="HUD" unique_id=2082713813]
+visible = false
 offset_left = 20.0
 offset_top = 18.0
 offset_right = 104.0

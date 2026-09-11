@@ -3,6 +3,7 @@ using Godot;
 public partial class Node2d : Godot.Node2D
 {
     [Export] private TextureButton startButton;
+    [Export] private TextureButton bigClothesButton;
     [Export] private BaseButton gameOverFrame;
     private Label gameOverScoreLabel;
     private Label gameOverHiLabel;
@@ -44,6 +45,15 @@ public partial class Node2d : Godot.Node2D
         GetViewport().SizeChanged += UpdateScoreLayout;
         UpdateScoreDisplay();
 
+        if (bigClothesButton == null)
+        {
+            bigClothesButton = GetNodeOrNull<TextureButton>("HUD/BigClothesButton");
+        }
+        if (bigClothesButton != null)
+        {
+            bigClothesButton.Pressed += OpenClothesPanel;
+        }
+
         if (changeClothesButton == null)
         {
             changeClothesButton = GetNodeOrNull<BaseButton>("HUD/ChangeClothesButton");
@@ -83,11 +93,11 @@ public partial class Node2d : Godot.Node2D
         }
 
 		dinoPlayer = GetNodeOrNull<DinoPlayer>("DinoPlayer");
+        CenterStartButton();
+        GetViewport().SizeChanged += CenterStartButton;
         if (startButton != null)
         {
             startButton.Pressed += StartGame;
-            CenterStartButton();
-            GetViewport().SizeChanged += CenterStartButton;
         }
 
         if (gameOverFrame == null)
@@ -200,6 +210,9 @@ public void StartGame()
     if (startButton != null)
         startButton.Hide();
 
+    if (bigClothesButton != null)
+        bigClothesButton.Hide();
+
     if (gameOverFrame != null)
         gameOverFrame.Hide();
 
@@ -256,8 +269,11 @@ public void StartGame()
     if (startButton != null)
         startButton.Show();
 
+    if (bigClothesButton != null)
+        bigClothesButton.Show();
+
     if (changeClothesButton != null)
-        changeClothesButton.Show();
+        changeClothesButton.Hide();
 
     if (spawner != null)
         spawner.StopSpawning();
@@ -292,6 +308,9 @@ public void StartGame()
     // Khi thua: hiện khung Game Over hiển thị điểm số và kỷ lục, ẩn startButton
     if (startButton != null)
         startButton.Hide();
+
+    if (bigClothesButton != null)
+        bigClothesButton.Hide();
 
     if (gameOverScoreLabel != null)
         gameOverScoreLabel.Text = $"SCORE: {(int)currentScore:D5}";
@@ -396,27 +415,46 @@ private void ToggleThirdOutfit()
 
 private void CenterStartButton()
 {
-    if (startButton == null) return;
-
-    Vector2 texSize = startButton.TextureNormal != null ? startButton.TextureNormal.GetSize() : startButton.Size;
-    if (texSize == Vector2.Zero)
+    Vector2 texSize = new Vector2(420f, 136f);
+    if (startButton != null)
     {
-        texSize = new Vector2(420f, 136f);
+        if (startButton.TextureNormal != null)
+            texSize = startButton.TextureNormal.GetSize();
+        else if (startButton.Size != Vector2.Zero)
+            texSize = startButton.Size;
+
+        startButton.LayoutMode = 1;
+        startButton.AnchorsPreset = (int)Control.LayoutPreset.Center;
+        startButton.AnchorLeft = 0.5f;
+        startButton.AnchorTop = 0.5f;
+        startButton.AnchorRight = 0.5f;
+        startButton.AnchorBottom = 0.5f;
+        startButton.OffsetLeft = -texSize.X / 2f;
+        startButton.OffsetRight = texSize.X / 2f;
+        startButton.OffsetTop = -texSize.Y / 2f;
+        startButton.OffsetBottom = texSize.Y / 2f;
+        startButton.GrowHorizontal = Control.GrowDirection.Both;
+        startButton.GrowVertical = Control.GrowDirection.Both;
+        startButton.PivotOffset = texSize / 2f;
     }
 
-    startButton.LayoutMode = 1;
-    startButton.AnchorsPreset = (int)Control.LayoutPreset.Center;
-    startButton.AnchorLeft = 0.5f;
-    startButton.AnchorTop = 0.5f;
-    startButton.AnchorRight = 0.5f;
-    startButton.AnchorBottom = 0.5f;
-    startButton.OffsetLeft = -texSize.X / 2f;
-    startButton.OffsetRight = texSize.X / 2f;
-    startButton.OffsetTop = -texSize.Y / 2f;
-    startButton.OffsetBottom = texSize.Y / 2f;
-    startButton.GrowHorizontal = Control.GrowDirection.Both;
-    startButton.GrowVertical = Control.GrowDirection.Both;
-    startButton.PivotOffset = texSize / 2f;
+    if (bigClothesButton != null)
+    {
+        float gap = 14f;
+        bigClothesButton.LayoutMode = 1;
+        bigClothesButton.AnchorsPreset = (int)Control.LayoutPreset.Center;
+        bigClothesButton.AnchorLeft = 0.5f;
+        bigClothesButton.AnchorTop = 0.5f;
+        bigClothesButton.AnchorRight = 0.5f;
+        bigClothesButton.AnchorBottom = 0.5f;
+        bigClothesButton.OffsetLeft = -texSize.X / 2f;
+        bigClothesButton.OffsetRight = texSize.X / 2f;
+        bigClothesButton.OffsetTop = (texSize.Y / 2f) + gap;
+        bigClothesButton.OffsetBottom = (texSize.Y / 2f) + gap + texSize.Y;
+        bigClothesButton.GrowHorizontal = Control.GrowDirection.Both;
+        bigClothesButton.GrowVertical = Control.GrowDirection.Both;
+        bigClothesButton.PivotOffset = texSize / 2f;
+    }
 }
 
 private void CenterGameOverFrame()
