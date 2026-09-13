@@ -638,7 +638,7 @@ private void CenterStartButton()
     private void CreateSettingsUI()
     {
         settingFrameBase = new TextureRect();
-        settingFrameBase.Texture = GD.Load<Texture2D>("res://setting_board.png");
+        settingFrameBase.Texture = GD.Load<Texture2D>("res://assets/setting_board.png");
         settingFrameBase.SetAnchorsPreset(Control.LayoutPreset.Center);
         settingFrameBase.AnchorLeft = 0.5f;
         settingFrameBase.AnchorTop = 0.5f;
@@ -661,25 +661,25 @@ private void CenterStartButton()
         settingFrameBase.AddChild(settingContent);
         
         TextureButton btnClose = new TextureButton();
-        btnClose.TextureNormal = GD.Load<Texture2D>("res://btn_close_normal.png");
-        btnClose.TextureHover = GD.Load<Texture2D>("res://btn_close_hover.png");
-        btnClose.TexturePressed = GD.Load<Texture2D>("res://btn_close_pressed.png");
+        btnClose.TextureNormal = GD.Load<Texture2D>("res://assets/btn_close_normal.png");
+        btnClose.TextureHover = GD.Load<Texture2D>("res://assets/btn_close_hover.png");
+        btnClose.TexturePressed = GD.Load<Texture2D>("res://assets/btn_close_pressed.png");
         btnClose.Position = new Vector2(-15, -15);
         btnClose.Pressed += OnCloseSettingButtonPressed;
         settingFrameBase.AddChild(btnClose);
 
         TextureButton btnHowToPlay = new TextureButton();
-        btnHowToPlay.TextureNormal = GD.Load<Texture2D>("res://btn_tab1_norm.png");
-        btnHowToPlay.TextureHover = GD.Load<Texture2D>("res://btn_tab1_hover.png");
-        btnHowToPlay.TexturePressed = GD.Load<Texture2D>("res://btn_tab1_press.png");
+        btnHowToPlay.TextureNormal = GD.Load<Texture2D>("res://assets/btn_tab1_norm.png");
+        btnHowToPlay.TextureHover = GD.Load<Texture2D>("res://assets/btn_tab1_hover.png");
+        btnHowToPlay.TexturePressed = GD.Load<Texture2D>("res://assets/btn_tab1_press.png");
         btnHowToPlay.Position = new Vector2(100, 35);
         btnHowToPlay.Pressed += () => SwitchSettingTab(0);
         settingContent.AddChild(btnHowToPlay);
 
         TextureButton btnVolume = new TextureButton();
-        btnVolume.TextureNormal = GD.Load<Texture2D>("res://btn_tab2_norm.png");
-        btnVolume.TextureHover = GD.Load<Texture2D>("res://btn_tab2_hover.png");
-        btnVolume.TexturePressed = GD.Load<Texture2D>("res://btn_tab2_press.png");
+        btnVolume.TextureNormal = GD.Load<Texture2D>("res://assets/btn_tab2_norm.png");
+        btnVolume.TextureHover = GD.Load<Texture2D>("res://assets/btn_tab2_hover.png");
+        btnVolume.TexturePressed = GD.Load<Texture2D>("res://assets/btn_tab2_press.png");
         btnVolume.Position = new Vector2(290, 35);
         btnVolume.Pressed += () => SwitchSettingTab(1);
         settingContent.AddChild(btnVolume);

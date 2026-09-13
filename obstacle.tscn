@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://djbjjukphs7yx"]
 
 [ext_resource type="Script" uid="uid://bm54ffw103o4l" path="res://Obstacle.cs" id="1_aubd6"]
-[ext_resource type="Texture2D" uid="uid://c33f56jlne8x8" path="res://ChatGPT Image 11_37_41 5 thg 9, 2026.png" id="2_vcivv"]
+[ext_resource type="Texture2D" uid="uid://c33f56jlne8x8" path="res://assets/ChatGPT Image 11_37_41 5 thg 9, 2026.png" id="2_vcivv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f775p"]
 size = Vector2(107, 80.5)

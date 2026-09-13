@@ -57,15 +57,15 @@ public partial class DinoPlayer : CharacterBody2D
         deadSprite = GetNodeOrNull<Sprite2D>("DeadSprite");
         duckSprite = GetNodeOrNull<Sprite2D>("DuckSprite");
 
-        duckTex1 = GD.Load<Texture2D>("res://dino_duck.png");
-        duckTex2 = GD.Load<Texture2D>("res://dino_duck2.png");
+        duckTex1 = GD.Load<Texture2D>("res://assets/dino_duck.png");
+        duckTex2 = GD.Load<Texture2D>("res://assets/dino_duck2.png");
 
         jumpSoundPlayer = new AudioStreamPlayer();
-        jumpSoundPlayer.Stream = GD.Load<AudioStream>("res://jump.wav");
+        jumpSoundPlayer.Stream = GD.Load<AudioStream>("res://assets/jump.wav");
         AddChild(jumpSoundPlayer);
 
         deadSoundPlayer = new AudioStreamPlayer();
-        deadSoundPlayer.Stream = GD.Load<AudioStream>("res://dead.wav");
+        deadSoundPlayer.Stream = GD.Load<AudioStream>("res://assets/dead.wav");
         AddChild(deadSoundPlayer);
 
         if (duckSprite != null)

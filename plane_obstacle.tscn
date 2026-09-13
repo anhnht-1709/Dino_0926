@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c6planeobs001"]
 
 [ext_resource type="Script" uid="uid://bm54ffw103o4l" path="res://Obstacle.cs" id="1_obs"]
-[ext_resource type="Texture2D" uid="uid://ndvhuy77n41q" path="res://airplane.png" id="2_plane"]
+[ext_resource type="Texture2D" uid="uid://ndvhuy77n41q" path="res://assets/airplane.png" id="2_plane"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_plane"]
 size = Vector2(182.5, 48)

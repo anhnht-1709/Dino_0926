@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b80diy4lokbp0"]
 
 [ext_resource type="Script" path="res://GroundPiece.cs" id="1_piece"]
-[ext_resource type="Texture2D" uid="uid://diifdjl2654h2" path="res://ChatGPT Image 22_41_23 4 thg 9, 2026.png" id="2_tex"]
+[ext_resource type="Texture2D" uid="uid://diifdjl2654h2" path="res://assets/ChatGPT Image 22_41_23 4 thg 9, 2026.png" id="2_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2"]
 size = Vector2(2706.205, 232)

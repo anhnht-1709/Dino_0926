@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bj0ki43udu4yk"]
 
-[ext_resource type="Texture2D" uid="uid://c8am6yx007jjp" path="res://ChatGPT Image 04_31_47 6 thg 9, 2026.png" id="1_tex"]
+[ext_resource type="Texture2D" uid="uid://c8am6yx007jjp" path="res://assets/ChatGPT Image 04_31_47 6 thg 9, 2026.png" id="1_tex"]
 [ext_resource type="Script" uid="uid://dxbifljl125bv" path="res://SkyPiece.cs" id="2_script"]
 
 [node name="SkyPiece" type="Node2D" unique_id=1045548284]
