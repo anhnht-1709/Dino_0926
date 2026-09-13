@@ -37,6 +37,12 @@ public partial class Node2d : Godot.Node2D
     private int spacePressCount = 0;
     private float spacePressTimer = 0f;
 
+        private TextureRect settingFrameBase;
+private Control settingContent;
+    private Control howToPlayPanel;
+    private Control volumePanel;
+    private HSlider volumeSlider;
+
     public override void _Ready()
     {
         if (scoreFrame == null)
@@ -169,6 +175,7 @@ public partial class Node2d : Godot.Node2D
             skyManager = GetNodeOrNull<SkyManager>("SkyManager");
         }
 
+        CreateSettingsUI();
         ResetGame();
     }
 
@@ -388,6 +395,7 @@ public void StartGame()
     if (gameOverHintLabel != null) gameOverHintLabel.Show();
     if (titleLabel != null) titleLabel.Show();
     if (closeSettingButton != null) closeSettingButton.Hide();
+    if (settingFrameBase != null) settingFrameBase.Hide();
     if (homeButton != null) homeButton.Show();
     if (replayButton != null) replayButton.Show();
 
@@ -400,18 +408,15 @@ public void StartGame()
 
     if (gameOverHintLabel != null)
         gameOverHintLabel.Text = "NHẤN SPACE 2 LẦN ĐỂ CHƠI LẠI";
-
+        
     if (gameOverFrame != null)
     {
         CenterGameOverFrame();
         gameOverFrame.Show();
     }
-
+        
     if (changeClothesButton != null)
         changeClothesButton.Show();
-
-    if (settingButtonSmall != null)
-        settingButtonSmall.Hide();
 
     if (spawner != null)
         spawner.StopSpawning();
@@ -507,14 +512,23 @@ private void OnSettingButtonPressed()
     if (homeButton != null) homeButton.Hide();
     if (replayButton != null) replayButton.Hide();
     if (changeClothesButton != null) changeClothesButton.Hide();
+    if (startButton != null) startButton.Hide();
+    if (bigClothesButton != null) bigClothesButton.Hide();
+    if (bigSettingButton != null) bigSettingButton.Hide();
 
     if (closeSettingButton != null) closeSettingButton.Show();
-
+    if (settingButtonSmall != null)
+        settingButtonSmall.Hide();
+        
     if (gameOverFrame != null)
+        gameOverFrame.Hide();
+        
+    if (settingFrameBase != null)
     {
-        CenterGameOverFrame();
-        gameOverFrame.Show();
+        settingFrameBase.Show();
+        SwitchSettingTab(0);
     }
+
     
     if (isPlaying)
     {
@@ -524,16 +538,27 @@ private void OnSettingButtonPressed()
 
 private void OnCloseSettingButtonPressed()
 {
-    if (gameOverFrame != null)
-    {
-        gameOverFrame.Hide();
-    }
+    if (settingFrameBase != null) settingFrameBase.Hide();
     
-    if (closeSettingButton != null) closeSettingButton.Hide();
+    // Only show small setting button if we are not in the main menu
+    if (startButton != null && !startButton.Visible && settingButtonSmall != null)
+    {
+        settingButtonSmall.Show();
+    }
     
     if (isPlaying)
     {
         GetTree().Paused = false;
+    }
+    else if (spacePressCount == 0)
+    {
+        // Restore Main Menu UI
+        ResetGame();
+    }
+    else 
+    {
+        // Restore Game Over UI if we were in Game Over state
+        StopGame();
     }
 }
 private void OnHomeButtonPressed()
@@ -610,9 +635,129 @@ private void CenterStartButton()
         }
     }
 }
+    private void CreateSettingsUI()
+    {
+        settingFrameBase = new TextureRect();
+        settingFrameBase.Texture = GD.Load<Texture2D>("res://setting_board.png");
+        settingFrameBase.SetAnchorsPreset(Control.LayoutPreset.Center);
+        settingFrameBase.AnchorLeft = 0.5f;
+        settingFrameBase.AnchorTop = 0.5f;
+        settingFrameBase.AnchorRight = 0.5f;
+        settingFrameBase.AnchorBottom = 0.5f;
+        settingFrameBase.OffsetLeft = -560f / 2f;
+        settingFrameBase.OffsetTop = -358f / 2f;
+        settingFrameBase.OffsetRight = 560f / 2f;
+        settingFrameBase.OffsetBottom = 358f / 2f;
+        settingFrameBase.PivotOffset = new Vector2(560f / 2f, 358f / 2f);
+        settingFrameBase.Scale = new Vector2(1.2f, 1.2f);
+        settingFrameBase.ProcessMode = Node.ProcessModeEnum.Always;
+        
+        GetNode("HUD").AddChild(settingFrameBase);
+        settingFrameBase.Hide();
+
+        settingContent = new Control();
+        settingContent.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+        settingContent.MouseFilter = Control.MouseFilterEnum.Ignore;
+        settingFrameBase.AddChild(settingContent);
+        
+        TextureButton btnClose = new TextureButton();
+        btnClose.TextureNormal = GD.Load<Texture2D>("res://btn_close_normal.png");
+        btnClose.TextureHover = GD.Load<Texture2D>("res://btn_close_hover.png");
+        btnClose.TexturePressed = GD.Load<Texture2D>("res://btn_close_pressed.png");
+        btnClose.Position = new Vector2(-15, -15);
+        btnClose.Pressed += OnCloseSettingButtonPressed;
+        settingFrameBase.AddChild(btnClose);
+
+        TextureButton btnHowToPlay = new TextureButton();
+        btnHowToPlay.TextureNormal = GD.Load<Texture2D>("res://btn_tab1_norm.png");
+        btnHowToPlay.TextureHover = GD.Load<Texture2D>("res://btn_tab1_hover.png");
+        btnHowToPlay.TexturePressed = GD.Load<Texture2D>("res://btn_tab1_press.png");
+        btnHowToPlay.Position = new Vector2(100, 35);
+        btnHowToPlay.Pressed += () => SwitchSettingTab(0);
+        settingContent.AddChild(btnHowToPlay);
+
+        TextureButton btnVolume = new TextureButton();
+        btnVolume.TextureNormal = GD.Load<Texture2D>("res://btn_tab2_norm.png");
+        btnVolume.TextureHover = GD.Load<Texture2D>("res://btn_tab2_hover.png");
+        btnVolume.TexturePressed = GD.Load<Texture2D>("res://btn_tab2_press.png");
+        btnVolume.Position = new Vector2(290, 35);
+        btnVolume.Pressed += () => SwitchSettingTab(1);
+        settingContent.AddChild(btnVolume);
+
+        howToPlayPanel = new Control();
+        howToPlayPanel.Position = new Vector2(60, 100);
+        howToPlayPanel.Size = new Vector2(440, 240);
+        howToPlayPanel.MouseFilter = Control.MouseFilterEnum.Ignore;
+        settingContent.AddChild(howToPlayPanel);
+
+        Label lblInstructions = new Label();
+        lblInstructions.Text = @"- Nhấn SPACE hoặc Lên để nhảy.
+- Nhấn giữ Xuống để cúi người.
+- Tránh chướng ngại vật.
+- Máy bay bay cao: đi thẳng.
+- Máy bay bay thấp: CÚI để qua!";
+        lblInstructions.AddThemeColorOverride("font_color", new Color(0.31f, 0.15f, 0.04f));
+        lblInstructions.AddThemeFontSizeOverride("font_size", 22);
+        lblInstructions.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+        lblInstructions.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        howToPlayPanel.AddChild(lblInstructions);
+
+        volumePanel = new Control();
+        volumePanel.Position = new Vector2(60, 100);
+        volumePanel.Size = new Vector2(440, 240);
+        volumePanel.MouseFilter = Control.MouseFilterEnum.Ignore;
+        settingContent.AddChild(volumePanel);
+        volumePanel.Hide();
+
+        Label lblVolume = new Label();
+        lblVolume.Text = "ÂM LƯỢNG (VOLUME)";
+        lblVolume.AddThemeColorOverride("font_color", new Color(0.31f, 0.15f, 0.04f));
+        lblVolume.AddThemeFontSizeOverride("font_size", 24);
+        lblVolume.Position = new Vector2(0, 20);
+        volumePanel.AddChild(lblVolume);
+
+        volumeSlider = new HSlider();
+        volumeSlider.Position = new Vector2(0, 80);
+        volumeSlider.Size = new Vector2(300, 30);
+        volumeSlider.MinValue = 0;
+        volumeSlider.MaxValue = 100;
+        volumeSlider.Value = 100;
+        volumeSlider.ValueChanged += OnVolumeChanged;
+        volumePanel.AddChild(volumeSlider);
+    }
 
 
-private void CenterGameOverFrame()
+    private void SwitchSettingTab(int tabIndex)
+    {
+        if (howToPlayPanel == null || volumePanel == null) return;
+        if (tabIndex == 0)
+        {
+            howToPlayPanel.Show();
+            volumePanel.Hide();
+        }
+        else
+        {
+            howToPlayPanel.Hide();
+            volumePanel.Show();
+        }
+    }
+
+    private void OnVolumeChanged(double value)
+    {
+        int masterBusIndex = AudioServer.GetBusIndex("Master");
+        if (value <= 0)
+        {
+            AudioServer.SetBusMute(masterBusIndex, true);
+        }
+        else
+        {
+            AudioServer.SetBusMute(masterBusIndex, false);
+            float db = (float)Mathf.LinearToDb(value / 100.0);
+            AudioServer.SetBusVolumeDb(masterBusIndex, db);
+        }
+    }
+
+    private void CenterGameOverFrame()
 {
     if (gameOverFrame == null) return;
 
@@ -630,6 +775,7 @@ private void CenterGameOverFrame()
     gameOverFrame.GrowHorizontal = Control.GrowDirection.Both;
     gameOverFrame.GrowVertical = Control.GrowDirection.Both;
     gameOverFrame.PivotOffset = size / 2f;
+    gameOverFrame.Scale = new Vector2(1.3f, 1.3f);
 }
 
 private void RegisterRestartPress()

@@ -37,11 +37,9 @@
 [ext_resource type="Texture2D" uid="uid://dfdbfr2edt1sy" path="res://btn_setting_normal.png" id="38_set_norm"]
 [ext_resource type="Texture2D" uid="uid://cmh307lpvo66n" path="res://btn_setting_hover.png" id="39_set_hover"]
 [ext_resource type="Texture2D" uid="uid://do0nl6xb8fwtc" path="res://btn_setting_pressed.png" id="40_set_press"]
-
-
-[ext_resource type="Texture2D" path="res://btn_close_normal.png" id="41_close_norm"]
-[ext_resource type="Texture2D" path="res://btn_close_hover.png" id="42_close_hover"]
-[ext_resource type="Texture2D" path="res://btn_close_pressed.png" id="43_close_press"]
+[ext_resource type="Texture2D" uid="uid://i2u0ewjh245s" path="res://btn_close_normal.png" id="41_close_norm"]
+[ext_resource type="Texture2D" uid="uid://bkghcvtqemqdl" path="res://btn_close_hover.png" id="42_close_hover"]
+[ext_resource type="Texture2D" uid="uid://dqcj3bfglvlcm" path="res://btn_close_pressed.png" id="43_close_press"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q6r6c"]
 atlas = ExtResource("4_0hol4")
@@ -213,12 +211,10 @@ grow_vertical = 2
 pivot_offset = Vector2(263, 196.5)
 texture_normal = ExtResource("16_frame")
 
-
 [node name="CloseSettingButton" type="TextureButton" parent="HUD/GameOverFrame" unique_id=1234567892]
 process_mode = 3
 visible = false
 layout_mode = 1
-anchors_preset = 0
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 74.0

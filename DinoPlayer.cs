@@ -43,6 +43,8 @@ public partial class DinoPlayer : CharacterBody2D
     private Tween outfitTween;
 
     private int currentOutfit = 0;
+    private AudioStreamPlayer jumpSoundPlayer;
+    private AudioStreamPlayer deadSoundPlayer;
 
     public override void _Ready()
     {
@@ -57,6 +59,14 @@ public partial class DinoPlayer : CharacterBody2D
 
         duckTex1 = GD.Load<Texture2D>("res://dino_duck.png");
         duckTex2 = GD.Load<Texture2D>("res://dino_duck2.png");
+
+        jumpSoundPlayer = new AudioStreamPlayer();
+        jumpSoundPlayer.Stream = GD.Load<AudioStream>("res://jump.wav");
+        AddChild(jumpSoundPlayer);
+
+        deadSoundPlayer = new AudioStreamPlayer();
+        deadSoundPlayer.Stream = GD.Load<AudioStream>("res://dead.wav");
+        AddChild(deadSoundPlayer);
 
         if (duckSprite != null)
         {
@@ -246,6 +256,11 @@ public partial class DinoPlayer : CharacterBody2D
                 Velocity.X,
                 JumpForce
             );
+            
+            if (jumpSoundPlayer != null)
+            {
+                jumpSoundPlayer.Play();
+            }
 
             // Khi vừa bật nhảy: đứng yên ngay lập tức, dừng chuyển động hoạt ảnh
             if (animatedSprite != null)
@@ -479,6 +494,11 @@ public partial class DinoPlayer : CharacterBody2D
     {
         if (isDead)
             return;
+
+        if (deadSoundPlayer != null)
+        {
+            deadSoundPlayer.Play();
+        }
 
         if (isDucking) StopDucking();
         if (duckSprite != null) duckSprite.Hide();
