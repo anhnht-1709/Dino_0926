@@ -118,11 +118,57 @@ private Control settingContent;
             clothesPanel = GetNodeOrNull<Control>("HUD/ClothesPanel");
         }
 
-		BaseButton closeClothesButton = GetNodeOrNull<BaseButton>("HUD/ClothesPanel/CloseClothesButton");
-		if (closeClothesButton != null)
-		{
-			closeClothesButton.Pressed += CloseClothesPanel;
-		}
+		if (clothesPanel != null)
+        {
+            clothesPanel.SelfModulate = new Color(1, 1, 1, 0); 
+            clothesPanel.SetAnchorsPreset(Control.LayoutPreset.Center);
+            clothesPanel.AnchorLeft = 0.5f;
+            clothesPanel.AnchorTop = 0.5f;
+            clothesPanel.AnchorRight = 0.5f;
+            clothesPanel.AnchorBottom = 0.5f;
+            clothesPanel.OffsetLeft = -560f / 2f;
+            clothesPanel.OffsetTop = -358f / 2f;
+            clothesPanel.OffsetRight = 560f / 2f;
+            clothesPanel.OffsetBottom = 358f / 2f;
+            clothesPanel.PivotOffset = new Vector2(280f, 179f);
+            clothesPanel.Scale = new Vector2(1.2f, 1.2f);
+            
+            TextureRect bg = new TextureRect();
+            bg.Texture = GD.Load<Texture2D>("res://assets/setting_board.png");
+            bg.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+            clothesPanel.AddChild(bg);
+            clothesPanel.MoveChild(bg, 0);
+
+            BaseButton oldCloseBtn = GetNodeOrNull<BaseButton>("HUD/ClothesPanel/CloseClothesButton");
+            if (oldCloseBtn != null) oldCloseBtn.QueueFree();
+
+            TextureButton newCloseBtn = new TextureButton();
+            newCloseBtn.TextureNormal = GD.Load<Texture2D>("res://assets/btn_close_normal.png");
+            newCloseBtn.TextureHover = GD.Load<Texture2D>("res://assets/btn_close_hover.png");
+            newCloseBtn.TexturePressed = GD.Load<Texture2D>("res://assets/btn_close_pressed.png");
+            newCloseBtn.Position = new Vector2(-15, -15);
+            newCloseBtn.Pressed += CloseClothesPanel;
+            clothesPanel.AddChild(newCloseBtn);
+
+            BaseButton btn1 = clothesPanel.GetNodeOrNull<BaseButton>("OutfitButton1");
+            BaseButton btn2 = clothesPanel.GetNodeOrNull<BaseButton>("OutfitButton2");
+            BaseButton btn3 = clothesPanel.GetNodeOrNull<BaseButton>("OutfitButton3");
+
+            if (btn1 != null) {
+                btn1.SetAnchorsPreset(Control.LayoutPreset.TopLeft);
+                btn1.Position = new Vector2(40, 100);
+            }
+            if (btn2 != null) {
+                btn2.SetAnchorsPreset(Control.LayoutPreset.TopLeft);
+                btn2.Position = new Vector2(220, 100);
+            }
+            if (btn3 != null) {
+                btn3.SetAnchorsPreset(Control.LayoutPreset.TopLeft);
+                btn3.Position = new Vector2(400, 100);
+            }
+
+        }
+
 
 		BaseButton outfitButton1 = GetNodeOrNull<BaseButton>("HUD/ClothesPanel/OutfitButton1");
 		if (outfitButton1 != null)
