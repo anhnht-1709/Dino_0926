@@ -4,6 +4,10 @@ public partial class Node2d : Godot.Node2D
 {
     [Export] private TextureButton startButton;
     [Export] private TextureButton bigClothesButton;
+    [Export] private TextureButton bigSettingButton;
+    [Export] private TextureButton settingButtonSmall;
+    private Label titleLabel;
+    [Export] private TextureButton closeSettingButton;
     [Export] private BaseButton gameOverFrame;
     [Export] private BaseButton homeButton;
     [Export] private BaseButton replayButton;
@@ -46,6 +50,25 @@ public partial class Node2d : Godot.Node2D
         UpdateScoreLayout();
         GetViewport().SizeChanged += UpdateScoreLayout;
         UpdateScoreDisplay();
+
+        
+        if (bigSettingButton == null)
+            bigSettingButton = GetNodeOrNull<TextureButton>("HUD/BigSettingButton");
+        if (bigSettingButton != null)
+            bigSettingButton.Pressed += OnSettingButtonPressed;
+
+        if (settingButtonSmall == null)
+            settingButtonSmall = GetNodeOrNull<TextureButton>("HUD/SettingButtonSmall");
+        if (settingButtonSmall != null)
+            settingButtonSmall.Pressed += OnSettingButtonPressed;
+
+        titleLabel = GetNodeOrNull<Label>("HUD/GameOverFrame/TitleLabel");
+
+        if (closeSettingButton == null)
+            closeSettingButton = GetNodeOrNull<TextureButton>("HUD/GameOverFrame/CloseSettingButton");
+        if (closeSettingButton != null)
+            closeSettingButton.Pressed += OnCloseSettingButtonPressed;
+
 
         if (bigClothesButton == null)
         {
@@ -234,6 +257,12 @@ public void StartGame()
     if (bigClothesButton != null)
         bigClothesButton.Hide();
 
+    if (bigSettingButton != null)
+        bigSettingButton.Hide();
+
+    if (settingButtonSmall != null)
+        settingButtonSmall.Show();
+
     if (gameOverFrame != null)
         gameOverFrame.Hide();
 
@@ -293,6 +322,12 @@ public void StartGame()
     if (bigClothesButton != null)
         bigClothesButton.Show();
 
+    if (bigSettingButton != null)
+        bigSettingButton.Show();
+
+    if (settingButtonSmall != null)
+        settingButtonSmall.Hide();
+
     if (changeClothesButton != null)
         changeClothesButton.Hide();
 
@@ -341,6 +376,22 @@ public void StartGame()
     if (bigClothesButton != null)
         bigClothesButton.Hide();
 
+    if (bigSettingButton != null)
+        bigSettingButton.Hide();
+
+    if (settingButtonSmall != null)
+        settingButtonSmall.Show();
+
+    
+    if (gameOverScoreLabel != null) gameOverScoreLabel.Show();
+    if (gameOverHiLabel != null) gameOverHiLabel.Show();
+    if (gameOverHintLabel != null) gameOverHintLabel.Show();
+    if (titleLabel != null) titleLabel.Show();
+    if (closeSettingButton != null) closeSettingButton.Hide();
+    if (homeButton != null) homeButton.Show();
+    if (replayButton != null) replayButton.Show();
+
+
     if (gameOverScoreLabel != null)
         gameOverScoreLabel.Text = $"SCORE: {(int)currentScore:D5}";
 
@@ -358,6 +409,9 @@ public void StartGame()
 
     if (changeClothesButton != null)
         changeClothesButton.Show();
+
+    if (settingButtonSmall != null)
+        settingButtonSmall.Hide();
 
     if (spawner != null)
         spawner.StopSpawning();
@@ -442,6 +496,46 @@ private void ToggleThirdOutfit()
         dinoPlayer.ToggleThirdOutfit();
 }
 
+
+
+private void OnSettingButtonPressed()
+{
+    if (gameOverScoreLabel != null) gameOverScoreLabel.Hide();
+    if (gameOverHiLabel != null) gameOverHiLabel.Hide();
+    if (gameOverHintLabel != null) gameOverHintLabel.Hide();
+    if (titleLabel != null) titleLabel.Hide();
+    if (homeButton != null) homeButton.Hide();
+    if (replayButton != null) replayButton.Hide();
+    if (changeClothesButton != null) changeClothesButton.Hide();
+
+    if (closeSettingButton != null) closeSettingButton.Show();
+
+    if (gameOverFrame != null)
+    {
+        CenterGameOverFrame();
+        gameOverFrame.Show();
+    }
+    
+    if (isPlaying)
+    {
+        GetTree().Paused = true;
+    }
+}
+
+private void OnCloseSettingButtonPressed()
+{
+    if (gameOverFrame != null)
+    {
+        gameOverFrame.Hide();
+    }
+    
+    if (closeSettingButton != null) closeSettingButton.Hide();
+    
+    if (isPlaying)
+    {
+        GetTree().Paused = false;
+    }
+}
 private void OnHomeButtonPressed()
 {
     ResetGame();
@@ -452,6 +546,7 @@ private void OnReplayButtonPressed()
     StartGame();
 }
 
+
 private void CenterStartButton()
 {
     Vector2 texSize = new Vector2(420f, 136f);
@@ -461,6 +556,10 @@ private void CenterStartButton()
             texSize = startButton.TextureNormal.GetSize();
         else if (startButton.Size != Vector2.Zero)
             texSize = startButton.Size;
+            
+        float gap = 14f;
+        float totalHeight = (texSize.Y * 3) + (gap * 2);
+        float startY = -totalHeight / 2f;
 
         startButton.LayoutMode = 1;
         startButton.AnchorsPreset = (int)Control.LayoutPreset.Center;
@@ -470,31 +569,48 @@ private void CenterStartButton()
         startButton.AnchorBottom = 0.5f;
         startButton.OffsetLeft = -texSize.X / 2f;
         startButton.OffsetRight = texSize.X / 2f;
-        startButton.OffsetTop = -texSize.Y / 2f;
-        startButton.OffsetBottom = texSize.Y / 2f;
+        startButton.OffsetTop = startY + texSize.Y + gap;
+        startButton.OffsetBottom = startY + texSize.Y + gap + texSize.Y;
         startButton.GrowHorizontal = Control.GrowDirection.Both;
         startButton.GrowVertical = Control.GrowDirection.Both;
         startButton.PivotOffset = texSize / 2f;
-    }
 
-    if (bigClothesButton != null)
-    {
-        float gap = 14f;
-        bigClothesButton.LayoutMode = 1;
-        bigClothesButton.AnchorsPreset = (int)Control.LayoutPreset.Center;
-        bigClothesButton.AnchorLeft = 0.5f;
-        bigClothesButton.AnchorTop = 0.5f;
-        bigClothesButton.AnchorRight = 0.5f;
-        bigClothesButton.AnchorBottom = 0.5f;
-        bigClothesButton.OffsetLeft = -texSize.X / 2f;
-        bigClothesButton.OffsetRight = texSize.X / 2f;
-        bigClothesButton.OffsetTop = (texSize.Y / 2f) + gap;
-        bigClothesButton.OffsetBottom = (texSize.Y / 2f) + gap + texSize.Y;
-        bigClothesButton.GrowHorizontal = Control.GrowDirection.Both;
-        bigClothesButton.GrowVertical = Control.GrowDirection.Both;
-        bigClothesButton.PivotOffset = texSize / 2f;
+        if (bigClothesButton != null)
+        {
+            bigClothesButton.LayoutMode = 1;
+            bigClothesButton.AnchorsPreset = (int)Control.LayoutPreset.Center;
+            bigClothesButton.AnchorLeft = 0.5f;
+            bigClothesButton.AnchorTop = 0.5f;
+            bigClothesButton.AnchorRight = 0.5f;
+            bigClothesButton.AnchorBottom = 0.5f;
+            bigClothesButton.OffsetLeft = -texSize.X / 2f;
+            bigClothesButton.OffsetRight = texSize.X / 2f;
+            bigClothesButton.OffsetTop = startY + (texSize.Y + gap) * 2;
+            bigClothesButton.OffsetBottom = startY + (texSize.Y + gap) * 2 + texSize.Y;
+            bigClothesButton.GrowHorizontal = Control.GrowDirection.Both;
+            bigClothesButton.GrowVertical = Control.GrowDirection.Both;
+            bigClothesButton.PivotOffset = texSize / 2f;
+        }
+
+        if (bigSettingButton != null)
+        {
+            bigSettingButton.LayoutMode = 1;
+            bigSettingButton.AnchorsPreset = (int)Control.LayoutPreset.Center;
+            bigSettingButton.AnchorLeft = 0.5f;
+            bigSettingButton.AnchorTop = 0.5f;
+            bigSettingButton.AnchorRight = 0.5f;
+            bigSettingButton.AnchorBottom = 0.5f;
+            bigSettingButton.OffsetLeft = -texSize.X / 2f;
+            bigSettingButton.OffsetRight = texSize.X / 2f;
+            bigSettingButton.OffsetTop = startY;
+            bigSettingButton.OffsetBottom = startY + texSize.Y;
+            bigSettingButton.GrowHorizontal = Control.GrowDirection.Both;
+            bigSettingButton.GrowVertical = Control.GrowDirection.Both;
+            bigSettingButton.PivotOffset = texSize / 2f;
+        }
     }
 }
+
 
 private void CenterGameOverFrame()
 {

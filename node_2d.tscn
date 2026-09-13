@@ -31,6 +31,17 @@
 [ext_resource type="Texture2D" uid="uid://bmvleunnkeps1" path="res://btn_replay_hover.png" id="32_rep_hover"]
 [ext_resource type="Texture2D" uid="uid://xcl2pbtyragg" path="res://btn_replay_pressed.png" id="33_rep_press"]
 [ext_resource type="Texture2D" uid="uid://bdg1xgrgs5c3y" path="res://btn_clothes_pressed.png" id="34_clothes_press"]
+[ext_resource type="Texture2D" uid="uid://bqutr2hf2wu6l" path="res://btn_setting_big_normal.png" id="35_setbig_norm"]
+[ext_resource type="Texture2D" uid="uid://d1rd4ws5rilo5" path="res://btn_setting_big_hover.png" id="36_setbig_hover"]
+[ext_resource type="Texture2D" uid="uid://umqq06e6wtyt" path="res://btn_setting_big_pressed.png" id="37_setbig_press"]
+[ext_resource type="Texture2D" uid="uid://dfdbfr2edt1sy" path="res://btn_setting_normal.png" id="38_set_norm"]
+[ext_resource type="Texture2D" uid="uid://cmh307lpvo66n" path="res://btn_setting_hover.png" id="39_set_hover"]
+[ext_resource type="Texture2D" uid="uid://do0nl6xb8fwtc" path="res://btn_setting_pressed.png" id="40_set_press"]
+
+
+[ext_resource type="Texture2D" path="res://btn_close_normal.png" id="41_close_norm"]
+[ext_resource type="Texture2D" path="res://btn_close_hover.png" id="42_close_hover"]
+[ext_resource type="Texture2D" path="res://btn_close_pressed.png" id="43_close_press"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q6r6c"]
 atlas = ExtResource("4_0hol4")
@@ -139,9 +150,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -210.0
-offset_top = -68.0
+offset_top = -143.0
 offset_right = 210.0
-offset_bottom = 68.0
+offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(210, 68)
@@ -157,15 +168,34 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -210.0
-offset_top = 82.0
+offset_top = 7.0
 offset_right = 210.0
-offset_bottom = 218.0
+offset_bottom = 143.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(210, 68)
 texture_normal = ExtResource("25_cbig_norm")
 texture_pressed = ExtResource("27_cbig_press")
 texture_hover = ExtResource("26_cbig_hover")
+
+[node name="BigSettingButton" type="TextureButton" parent="HUD" unique_id=1234567890]
+process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = 157.0
+offset_right = 210.0
+offset_bottom = 293.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(210, 68)
+texture_normal = ExtResource("35_setbig_norm")
+texture_pressed = ExtResource("37_setbig_press")
+texture_hover = ExtResource("36_setbig_hover")
 
 [node name="GameOverFrame" type="TextureButton" parent="HUD" unique_id=987654322]
 visible = false
@@ -182,6 +212,22 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(263, 196.5)
 texture_normal = ExtResource("16_frame")
+
+
+[node name="CloseSettingButton" type="TextureButton" parent="HUD/GameOverFrame" unique_id=1234567892]
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 74.0
+offset_bottom = 74.0
+texture_normal = ExtResource("41_close_norm")
+texture_pressed = ExtResource("43_close_press")
+texture_hover = ExtResource("42_close_hover")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="TitleLabel" type="Label" parent="HUD/GameOverFrame" unique_id=1091871139]
 layout_mode = 1
@@ -324,6 +370,23 @@ theme_override_font_sizes/font_size = 22
 text = "SCORE: 00000
 HI: 00000"
 vertical_alignment = 1
+
+[node name="SettingButtonSmall" type="TextureButton" parent="HUD" unique_id=1234567891]
+process_mode = 3
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -88.0
+offset_top = 130.0
+offset_right = -20.0
+offset_bottom = 198.0
+grow_horizontal = 0
+texture_normal = ExtResource("38_set_norm")
+texture_pressed = ExtResource("40_set_press")
+texture_hover = ExtResource("39_set_hover")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="ClothesPanel" type="Panel" parent="HUD" unique_id=455781174]
 visible = false

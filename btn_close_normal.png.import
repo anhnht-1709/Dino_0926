@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://57i1u43sdbpm"
-path="res://.godot/imported/Ảnh màn hình 2026-09-03 lúc 11.03.11.png-85a7119ef324e96331e72c44665e16ab.ctex"
+uid="uid://i2u0ewjh245s"
+path="res://.godot/imported/btn_close_normal.png-075ee19a287b52e5fb36819d9fde8441.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Ảnh màn hình 2026-09-03 lúc 11.03.11.png"
-dest_files=["res://.godot/imported/Ảnh màn hình 2026-09-03 lúc 11.03.11.png-85a7119ef324e96331e72c44665e16ab.ctex"]
+source_file="res://btn_close_normal.png"
+dest_files=["res://.godot/imported/btn_close_normal.png-075ee19a287b52e5fb36819d9fde8441.ctex"]
 
 [params]
 

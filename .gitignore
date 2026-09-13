@@ -1,3 +1,28 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Visual Studio / VS Code build artifacts
+bin/
+obj/
+.vs/
+.vscode/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# NuGet Packages
+*.nupkg
+packages/
+
+# Test results
+TestResults/
+
+# Environment files
+.env
+appsettings.Development.json
+appsettings.Local.json

@@ -66,11 +66,8 @@ public partial class DinoPlayer : CharacterBody2D
         }
 
         collisionShape = GetNodeOrNull<CollisionShape2D>("CollisionShape2D");
-        collisionShape2 = GetNodeOrNull<CollisionShape2D>("CollisionShape2D2");
-
         if (collisionShape != null)
         {
-            collisionShape.Disabled = false;
             defaultCollisionPos = collisionShape.Position;
             if (collisionShape.Shape is RectangleShape2D rect)
             {
@@ -78,12 +75,9 @@ public partial class DinoPlayer : CharacterBody2D
                 collisionShape.Shape = defaultShape;
                 defaultCollisionSize = defaultShape.Size;
                 duckCollisionSize = new Vector2(130.0f, 75.0f);
+                // Đáy collision box: 319.5 + 150/2 = 394.5. Khi cao 75: tâm Y = 394.5 - 37.5 = 357.0f
                 duckCollisionPos = new Vector2(defaultCollisionPos.X, 357.0f);
             }
-        }
-        if (collisionShape2 != null)
-        {
-            collisionShape2.Disabled = true;
         }
 
         clothesDefaultPos = clothesSprite.Position;
@@ -311,16 +305,8 @@ public partial class DinoPlayer : CharacterBody2D
         // Khi cúi người: nếu đang mặc đồ thì điều chỉnh quần áo nằm ngang theo thân dino
         ApplyDuckingOutfitTransform();
 
-        // Chuyển vùng tương tác sang CollisionShape2D2 khi ở trạng thái cúi xuống
-        if (collisionShape2 != null)
-        {
-            if (collisionShape != null)
-            {
-                collisionShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-            }
-            collisionShape2.SetDeferred(CollisionShape2D.PropertyName.Disabled, false);
-        }
-        else if (collisionShape != null && collisionShape.Shape is RectangleShape2D rect)
+        // Thu nhỏ chiều cao và hạ tâm collision shape
+        if (collisionShape != null && collisionShape.Shape is RectangleShape2D rect)
         {
             rect.Size = duckCollisionSize;
             collisionShape.Position = duckCollisionPos;
@@ -362,16 +348,8 @@ public partial class DinoPlayer : CharacterBody2D
             RestoreOutfitVisibility();
         }
 
-        // Khôi phục lại vùng tương tác là CollisionShape2D khi ở chế độ chạy thường
-        if (collisionShape2 != null)
-        {
-            if (collisionShape != null)
-            {
-                collisionShape.SetDeferred(CollisionShape2D.PropertyName.Disabled, false);
-            }
-            collisionShape2.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-        }
-        else if (collisionShape != null && collisionShape.Shape is RectangleShape2D rect)
+        // Phục hồi kích thước collision box đứng
+        if (collisionShape != null && collisionShape.Shape is RectangleShape2D rect)
         {
             rect.Size = defaultCollisionSize;
             collisionShape.Position = defaultCollisionPos;
@@ -811,7 +789,7 @@ public void ToggleSecondOutfit()
             hatSprite.Show();
         }
 
-        GD.Print("👕🎩 Đã mặc bộ đồ 2!");
+        GD.Print(" Đã mặc bộ đồ 2!");
     }
 }
 public void ToggleThirdOutfit()
@@ -822,7 +800,7 @@ public void ToggleThirdOutfit()
         clothesSprite.Hide();
         hatSprite.Hide();
         currentOutfit = 0;
-        GD.Print("👚 Đã cởi bộ đồ 3!");
+        GD.Print(" Đã cởi bộ đồ 3!");
     }
     else
     {
@@ -854,7 +832,7 @@ public void ToggleThirdOutfit()
             hatSprite.Show();
         }
 
-        GD.Print("👚🎩 Đã mặc bộ đồ 3!");
+        ;
     }
 }
 
