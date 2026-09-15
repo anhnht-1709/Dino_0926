@@ -95,10 +95,11 @@ script = ExtResource("17_ground")
 
 [node name="DinoPlayer" type="CharacterBody2D" parent="." unique_id=1852117108]
 z_index = 5
+position = Vector2(204, 0)
 script = ExtResource("2_0e48y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="DinoPlayer" unique_id=1754628052]
-position = Vector2(232.79147, 316.279)
+position = Vector2(232.791, 316.279)
 scale = Vector2(0.30035746, 0.3072807)
 sprite_frames = SubResource("SpriteFrames_o05a5")
 animation = &"run"

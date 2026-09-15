@@ -6,9 +6,11 @@
 [node name="SkyPiece" type="Node2D" unique_id=1045548284]
 script = ExtResource("2_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1545634483]
+[node name="Sprite2DBone2D" type="Bone2D" parent="." unique_id=1702053444]
 position = Vector2(827.99994, 282)
 scale = Vector2(1.4569603, 1.0838044)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2DBone2D" unique_id=1545634483]
 texture = ExtResource("1_tex")
 region_enabled = true
 region_rect = Rect2(290.178, 355.732, 1131.285, 531.268)

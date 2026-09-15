@@ -6,6 +6,7 @@ public partial class Node2d : Godot.Node2D
     [Export] private TextureButton bigClothesButton;
     [Export] private TextureButton bigSettingButton;
     [Export] private TextureButton settingButtonSmall;
+    private TextureButton gameOverSettingBtn;
     private Label titleLabel;
     [Export] private TextureButton closeSettingButton;
     [Export] private BaseButton gameOverFrame;
@@ -34,6 +35,7 @@ public partial class Node2d : Godot.Node2D
     private int highScore = 0;
 
     private bool isPlaying = false;
+    private Car backgroundCar;
     private int spacePressCount = 0;
     private float spacePressTimer = 0f;
 
@@ -45,6 +47,17 @@ private Control settingContent;
 
     public override void _Ready()
     {
+        PackedScene carScene = GD.Load<PackedScene>("res://car.tscn");
+        if (carScene != null) {
+            backgroundCar = carScene.Instantiate<Car>();
+            backgroundCar.Position = new Vector2(100, 340);
+            backgroundCar.Scale = new Vector2(0.45f, 0.45f);
+            backgroundCar.ZIndex = 1;
+            AddChild(backgroundCar);
+            // Re-order so it is behind HUD but in front of sky
+            MoveChild(backgroundCar, 3);
+        }
+
         if (scoreFrame == null)
         {
             scoreFrame = GetNodeOrNull<Control>("HUD/ScoreFrame");
@@ -200,6 +213,36 @@ private Control settingContent;
         {
             gameOverFrame = GetNodeOrNull<BaseButton>("HUD/GameOverFrame");
         }
+        
+        if (gameOverFrame != null)
+        {
+            gameOverSettingBtn = new TextureButton();
+            gameOverSettingBtn.TextureNormal = GD.Load<Texture2D>("res://assets/btn_setting_normal.png");
+            gameOverSettingBtn.TextureHover = GD.Load<Texture2D>("res://assets/btn_setting_hover.png");
+            gameOverSettingBtn.TexturePressed = GD.Load<Texture2D>("res://assets/btn_setting_pressed.png");
+            gameOverSettingBtn.IgnoreTextureSize = true;
+            gameOverSettingBtn.StretchMode = TextureButton.StretchModeEnum.KeepAspectCentered;
+            gameOverSettingBtn.SetAnchorsPreset(Control.LayoutPreset.CenterTop);
+            gameOverSettingBtn.OffsetTop = 230;
+            gameOverSettingBtn.OffsetBottom = 298;
+            gameOverSettingBtn.OffsetLeft = 98;
+            gameOverSettingBtn.OffsetRight = 166;
+            gameOverSettingBtn.Pressed += OnSettingButtonPressed;
+            gameOverFrame.AddChild(gameOverSettingBtn);
+            
+            if (homeButton != null) {
+                homeButton.OffsetLeft = -166;
+                homeButton.OffsetRight = -98;
+            }
+            if (replayButton != null) {
+                replayButton.OffsetLeft = -78;
+                replayButton.OffsetRight = -10;
+            }
+            if (changeClothesButton != null) {
+                changeClothesButton.OffsetLeft = 10;
+                changeClothesButton.OffsetRight = 78;
+            }
+        }
         if (gameOverFrame != null)
         {
             gameOverFrame.Pressed += OnGameOverFramePressed;
@@ -255,6 +298,11 @@ private Control settingContent;
             {
                 dinoPlayer.SetSpeedMultiplier(currentSpeedMultiplier);
             }
+            if (backgroundCar != null)
+            {
+                backgroundCar.SetSpeedMultiplier(currentSpeedMultiplier);
+            }
+
 
             // Đồng bộ tốc độ di chuyển và khoảng cách spawn vật cản
             if (spawner != null)
@@ -298,8 +346,12 @@ public void StartGame()
     UpdateScoreDisplay();
 
     isPlaying = true;
-
     spacePressCount = 0;
+    if (backgroundCar != null) {
+        backgroundCar.StartCar();
+        backgroundCar.SetSpeedMultiplier(currentSpeedMultiplier);
+    }
+
     spacePressTimer = 0f;
 
     SetScoreVisible(true);
@@ -411,6 +463,10 @@ public void StartGame()
    public void StopGame()
 {
     isPlaying = false;
+    if (backgroundCar != null) {
+        backgroundCar.StopCar();
+    }
+
     spacePressCount = 0;
     spacePressTimer = 0f;
 
@@ -433,7 +489,7 @@ public void StartGame()
         bigSettingButton.Hide();
 
     if (settingButtonSmall != null)
-        settingButtonSmall.Show();
+        settingButtonSmall.Hide();
 
     
     if (gameOverScoreLabel != null) gameOverScoreLabel.Show();
@@ -586,8 +642,8 @@ private void OnCloseSettingButtonPressed()
 {
     if (settingFrameBase != null) settingFrameBase.Hide();
     
-    // Only show small setting button if we are not in the main menu
-    if (startButton != null && !startButton.Visible && settingButtonSmall != null)
+    // Only show HUD setting button if the game is actively playing
+    if (isPlaying && settingButtonSmall != null)
     {
         settingButtonSmall.Show();
     }
