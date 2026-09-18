@@ -4,21 +4,19 @@
 [ext_resource type="Texture2D" uid="uid://tqugd6fcfadk" path="res://assets/car_body.png" id="2_body"]
 [ext_resource type="Texture2D" uid="uid://bi50loqffi5uu" path="res://assets/wheel.png" id="3_wheel"]
 
-[node name="Car" type="Node2D" unique_id=742643419]
-position = Vector2(27, 7)
+[node name="Car" type="Node2D" unique_id=1630772351]
+position = Vector2(362, 78)
 script = ExtResource("1_car")
 
-[node name="Body" type="Sprite2D" parent="." unique_id=821791950]
-position = Vector2(-7.000002, -136)
-scale = Vector2(1.03125, 1.1764253)
+[node name="Body" type="Sprite2D" parent="." unique_id=451740721]
 texture = ExtResource("2_body")
 
-[node name="Wheel1" type="Sprite2D" parent="." unique_id=176741021]
-position = Vector2(-220.5, 157.5)
-scale = Vector2(0.5178082, 0.48387095)
+[node name="Wheel1" type="Sprite2D" parent="." unique_id=1351565778]
+position = Vector2(-212, 171)
+scale = Vector2(0.5, 0.47828785)
 texture = ExtResource("3_wheel")
 
-[node name="Wheel2" type="Sprite2D" parent="." unique_id=1899600058]
-position = Vector2(127.5, 156.5)
-scale = Vector2(0.4986301, 0.47890818)
+[node name="Wheel2" type="Sprite2D" parent="." unique_id=30335863]
+position = Vector2(125, 178.00002)
+scale = Vector2(0.5, 0.47084367)
 texture = ExtResource("3_wheel")

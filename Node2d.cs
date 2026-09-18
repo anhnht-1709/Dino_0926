@@ -50,7 +50,7 @@ private Control settingContent;
         PackedScene carScene = GD.Load<PackedScene>("res://car.tscn");
         if (carScene != null) {
             backgroundCar = carScene.Instantiate<Car>();
-            backgroundCar.Position = new Vector2(100, 340);
+            backgroundCar.Position = new Vector2(100, 350);
             backgroundCar.Scale = new Vector2(0.45f, 0.45f);
             backgroundCar.ZIndex = 1;
             AddChild(backgroundCar);
